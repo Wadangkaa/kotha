@@ -1,0 +1,14 @@
+.content1 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+}
+
+.content .row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.image-div img {
+    height: 230px;
+    object-fit: cover;
+}

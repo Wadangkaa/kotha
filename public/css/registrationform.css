@@ -1,0 +1,71 @@
+* {
+    /* margin: 0; */
+    padding: 0;
+    box-sizing: border-box;
+    /* border:1px solid red; */
+}
+
+:root {
+    /* primary */
+    --Dark-cyan: hsl(158, 36%, 37%);
+    --Cream: hsl(30, 38%, 92%);
+    /* Neutral */
+    --Very-dark-blue: hsl(212, 21%, 14%);
+    --Dark-grayish-blue: hsl(228, 12%, 48%);
+    --White: hsl(0, 0%, 100%);
+    --font-family-primary: 'Montserrat', sans-serif;
+    --font-family-secondary: 'Fraunces', serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    height: 100vh;
+    background-color: var(--Cream);
+}
+
+.container1 {
+    display: flex;
+    border-radius: 8px;
+}
+
+.left {
+    width: 300px;
+    background-image: url(/../img/image-product-desktop.jpg);
+    background-size: cover;
+    border-radius: 8px 0px 0px 8px;
+}
+
+.right {
+    width: 600px;
+    padding: 34px;
+    background-color: #fff;
+    border-radius: 0px 8px 8px 0px;
+}
+
+#submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 48px;
+    border: none;
+    background-color: var(--Dark-cyan);
+    border-radius: 8px;
+    color: white;
+    font-family: var(--font-family-secondary);
+}
+
+.btn_icon {
+    margin: 10px;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-family-primary);
+}
