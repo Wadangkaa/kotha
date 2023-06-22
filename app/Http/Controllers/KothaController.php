@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kotha;
 use App\Http\Controllers\esewaController;
+use App\Http\Requests\KothaStoreRequest;
 use App\Models\Additional_info;
 use App\Models\UserPreference;
 use Illuminate\Http\Request;
@@ -60,41 +61,8 @@ class KothaController extends Controller
         return view('kothaform', ['NepalDistrict' => $this->NepalDistrict]);
     }
 
-    public function store(Request $request)
+    public function store(KothaStoreRequest $request)
     {
-        //validate form here
-        $request = $request->validate(
-            [
-                'images' => 'required',
-                'description' => 'required',
-                'price' => 'required|numeric',
-                'phone_no' => 'required|digits:10',
-                'email' => 'required|email',
-                'latitude' => 'required|numeric',
-                'longitude' => 'required|numeric',
-                'district' => 'required',
-                'city' => 'required',
-                'street' => 'required',
-                'additionalInfo' => 'nullable',
-                'bedroom' => 'required_if:additionalInfo,1',
-                'kitchen' => 'required_if:additionalInfo,1',
-                'livingroom' => 'required_if:additionalInfo,1',
-                'toilet' => 'required_if:additionalInfo,1',
-                'parking' => 'nullable',
-            ],
-            [
-                'phone_no' => [
-                    'digits' => 'Must be 10 digits',
-                    'required' => 'required'
-                ],
-                'district' => 'required',
-                'city' => 'required',
-                'street' => 'required',
-            ]
-        );
-        //validation end
-
-
         DB::transaction(function () use ($request) {
 
             $kotha = Kotha::create([
@@ -171,7 +139,7 @@ class KothaController extends Controller
             $kotha->update([
                 'description' => $request['description'],
                 'price' => $request['price'],
-                'user_id' => Session::get('user_id')
+                'user_id' => auth()->user()->id
             ]);
 
             $kotha->location->update([

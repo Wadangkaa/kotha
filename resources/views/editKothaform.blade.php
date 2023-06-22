@@ -1,10 +1,10 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
-@section('css')
+@section('styles')
     <link rel="stylesheet" href="{{ asset('css/kothaform.css') }}">
 @endsection
 
-@section('main-section')
+@section('content')
     <div class="row h-100 ml-0 main">
 
         <form action="{{ route('post.update', $post = $kotha) }}" method="post" enctype="multipart/form-data">
@@ -188,18 +188,19 @@
 
     </div>
 @endsection
-<!-- Optional JavaScript -->
-
-<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
-<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
-<script src='https://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
-<script src='https://rawgit.com/Logicify/jquery-locationpicker-plugin/master/dist/locationpicker.jquery.js'></script>
-
-{{-- map script end --}}
 
 
-<script>
-    $(function() {
+@section('scripts')
+    <!-- Optional JavaScript -->
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+    <script src='https://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
+    <script src='https://rawgit.com/Logicify/jquery-locationpicker-plugin/master/dist/locationpicker.jquery.js'></script>
+
+    {{-- map script end --}}
+
+
+    <script>
         $('#nepal_kathmandu').locationpicker({
             location: {
                 latitude: {{ $kotha->map->latitude }},
@@ -239,9 +240,5 @@
             }
 
         };
-    });
-</script>
-
-</body>
-
-</html>
+    </script>
+@endsection
