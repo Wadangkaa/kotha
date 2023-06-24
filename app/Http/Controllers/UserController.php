@@ -67,7 +67,7 @@ class UserController extends Controller
                 'district' => $request->preferences_district,
                 'min_price' => $request->preferences_max_price,
                 'max_price' => $request->preferences_min_price,
-                'parking' => $request->preferences_parking ? 1: 0
+                'parking' => $request->preferences_parking ? 1 : 0
             ]);
         });
 
@@ -132,7 +132,8 @@ class UserController extends Controller
         echo 'from destroy method';
     }
 
-    public function openPreferencesForm(){
+    public function openPreferencesForm()
+    {
         $NepalDistricts = [
             'Bhojpur', 'Dhankuta', 'Ilam', 'Jhapa', 'Khotang', 'Morang', 'Okhaldhunga', 'Panchthar', 'Sankhuwasabha', 'Solukhumbu', 'Sunsari', 'Taplejung', 'Terhathum', 'Udayapur',
             'Bara', 'Dhanusa', 'Mohattari', 'Parsa', 'Rautahat', 'Saptari', 'Sarlahi', 'Siraha',
@@ -145,7 +146,8 @@ class UserController extends Controller
         return view('auth.userPerferences', compact('NepalDistricts'));
     }
 
-    public function preferences(Request $request){
+    public function preferences(Request $request)
+    {
         auth()->user()->preferences()->create([
             'district' => $request->user_perfered_district,
             'min_price' => $request->min_price ?? 0,
