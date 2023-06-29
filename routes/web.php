@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\esewaController;
 use App\Http\Controllers\KothaController;
 use App\Http\Controllers\postController;
@@ -48,9 +49,15 @@ Route::get('payment/failure', [esewaController::class, 'paymentFailure'])->name(
 Route::get('kotha/{kotha}/show', [kothaController::class, 'showImages'])->name('kotha.showImages');
 Route::get('trash', [trashController::class, 'index'])->name('trash');
 Route::get('trash/restore/{id}', [trashController::class, 'restore'])->name('trash.restore');
-Route::get('trash/delete/{id}', [trashController::class, 'delete'])->name('trash.delete');  
+Route::get('trash/delete/{id}', [trashController::class, 'delete'])->name('trash.delete');
 Route::resource('user', UserController::class);
 Route::resource('kotha', KothaController::class);
 Route::resource('post', postController::class);
+
+Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+Route::get('admin/kotha', [AdminController::class, 'index'])->name('admin.index');
+Route::get('admin /kotha/{kotha}/preview', [AdminController::class, 'show'])->name('admin.kotha.preview');
+Route::get('admin/kotha/{kotha}/approve', [AdminController::class, 'approve'])->name('admin.kotha.approve');
+Route::get('admin/kotha/{kotha}/reject', [AdminController::class, 'reject'])->name('admin.kotha.reject');
 
 

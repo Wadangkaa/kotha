@@ -18,9 +18,8 @@ return new class extends Migration
 
             $table->text('description');
             $table->float('price')->nullable(false);
-
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->timestamp('deletedAt')->nullable();
+            $table->string('status')->default('pending');
             $table->timestamps();
             $table->softDeletes();
         });

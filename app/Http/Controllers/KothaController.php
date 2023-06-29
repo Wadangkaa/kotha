@@ -10,9 +10,11 @@ use App\Models\UserPreference;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use App\Traits\CheckOwnership;
 
 class KothaController extends Controller
 {
+    use CheckOwnership;
     private $NepalDistrict = [
         'Bhojpur', 'Dhankuta', 'Ilam', 'Jhapa', 'Khotang', 'Morang', 'Okhaldhunga', 'Panchthar', 'Sankhuwasabha', 'Solukhumbu', 'Sunsari', 'Taplejung', 'Terhathum', 'Udayapur',
         'Bara', 'Dhanusa', 'Mohattari', 'Parsa', 'Rautahat', 'Saptari', 'Sarlahi', 'Siraha',
@@ -26,32 +28,23 @@ class KothaController extends Controller
 
     public function index()
     {
-        $kothas =  Kotha::with(
-            'location',
-            'map',
-            'images',
-            'contact',
-            'location',
-            'additionalInfo',
-            'payment'
-        )->get();
-
+        $kothas =  Kotha::where('status', 'approved')->paginate();
         $recommendated_kothas = null;
         $hasPerferences = UserPreference::where('user_id', auth()->user()->id)->count();
 
-        if($hasPerferences){
+        if ($hasPerferences) {
             $user_preferences = UserPreference::where('user_id', auth()->user()->id)->first();
 
-            if($user_preferences){
+            if ($user_preferences) {
                 $recommendated_kothas = (new RecommendationController)->recommendateRoom($user_preferences);
             }
         }
 
-        
+
         sort($this->NepalDistrict);
         $NepalDistrict = $this->NepalDistrict;
         Session::put('active', 'allpost');
-        return view('dashboard', compact('NepalDistrict','kothas', 'recommendated_kothas'));
+        return view('dashboard', compact('NepalDistrict', 'kothas', 'recommendated_kothas'));
     }
 
     public function create()
@@ -173,8 +166,12 @@ class KothaController extends Controller
 
     public function destroy(Kotha $kotha)
     {
-        $status = $kotha->delete();
-        return $status;
+        $ownership = $this->checkOwner(Kotha::class, $kotha->id);
+        if ($ownership) {
+            $status = $kotha->delete();
+            return $status;
+        }
+        return redirect()->back();
     }
 
     public function showImages(Kotha $kotha)

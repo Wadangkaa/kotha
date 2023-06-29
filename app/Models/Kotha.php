@@ -11,10 +11,15 @@ class Kotha extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $with = [
+        'location', 'contact', 'map', 'additionalInfo', 'images',
+    ];
+
     protected $fillable = [
         'description',
         'price',
         'additionalInfo',
+        'status',
         'user_id'
     ];
 
@@ -37,7 +42,7 @@ class Kotha extends Model
     {
         return $this->hasOne(Additional_info::class);
     }
-    
+
     function images()
     {
         return $this->hasMany(Image::class);
@@ -45,5 +50,9 @@ class Kotha extends Model
 
     function payment(){
         return $this->hasOne(Payment::class);
+    }
+
+    function user(){
+        return $this->belongsTo(User::class);
     }
 }

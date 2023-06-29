@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kotha;
+use App\Traits\CheckOwnership;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class postController extends Controller
 {
+    use CheckOwnership;
     /**
      * Display a listing of the resource.
      *
@@ -70,8 +72,12 @@ class postController extends Controller
      */
     public function edit(Kotha $post)
     {
-        $kotha = $post;
-        return view('editKothaform', compact('kotha'));
+        $ownership = $this->checkOwner(Kotha::class, $post->id);
+        if ($ownership) {
+            $kotha = $post;
+            return view('editKothaform', compact('kotha'));
+        }
+        return redirect()->back();
     }
 
     /**
@@ -97,10 +103,10 @@ class postController extends Controller
     public function destroy(Kotha $post)
     {
         $status = (new KothaController)->destroy($post);
-        
-        if($status){
+
+        if ($status) {
             Session::put('success', 'Post Deleted Successfully');
-        }else{
+        } else {
             Session::put('error', 'Failed to Delete Post');
         }
 

@@ -11,7 +11,7 @@ class KothaStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -45,14 +45,6 @@ class KothaStoreRequest extends FormRequest
     {
         return [
             'phone_no.digits' => 'Must be 10 digits',
-               
-            // 'phone_no' => [
-            //     'digits' => 'Must be 10 digits',
-            //     'required' => 'required'
-            // ],
-            // 'district' => 'required',
-            // 'city' => 'required',
-            // 'street' => 'required',
         ];
     }
 

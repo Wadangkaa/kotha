@@ -20,7 +20,13 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => "David Chamling Rai",
             'email' => 'admin@gmail.com',
-            'password' => 'admin'
+            'password' => 'admin',
+            'is_admin' => 1
+        ]);
+        User::create([
+            'name' => "User",
+            'email' => 'user@gmail.com',
+            'password' => 'user',
         ]);
 
         User::factory(10)->create();
@@ -30,6 +36,8 @@ class DatabaseSeeder extends Seeder
         ->haslocation()
         ->hasmap()
         ->hasadditionalInfo()
-        ->create();
+        ->create([
+            'status' => 'approved'
+        ]);
     }
 }
