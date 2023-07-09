@@ -184,9 +184,12 @@ class KothaController extends Controller
     {
         sort($this->NepalDistrict);
         $district = $request['district'];
+        $minPrice = $request->min_price;
+        $maxPrice = $request->max_price;
+
         $kothas = Kotha::whereHas('location', function ($table) use ($district) {
             $table->where('district', $district);
-        })->get();
-        return view('dashboard', ['NepalDistrict' => $this->NepalDistrict, 'kothas' => $kothas]);
+        })->whereBetween('price', [$minPrice, $maxPrice])->paginate();
+        return view('dashboard', ['NepalDistrict' => $this->NepalDistrict, 'kothas' => $kothas, 'selectedDistrict' => $district]);
     }
 }
