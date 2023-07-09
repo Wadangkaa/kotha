@@ -20,8 +20,11 @@
             <select class="form-control form-control-sm" name="district" id="district">
                 <option disabled hidden selected>Select District</option>
                 @foreach ($NepalDistrict as $district)
-                    <option value="{{ $district }}" @if ($district == $selectedDistrict)
+                    <option value="{{ $district }}"
+                    @if (isset($selectedDistrict))
+                    @if ($district == $selectedDistrict)
                         selected
+                    @endif
                     @endif>{{ $district }}</option>
                 @endforeach
             </select>

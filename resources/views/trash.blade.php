@@ -18,7 +18,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">You do not have any post yet</h1>
+                        <h1 class="m-0">You haven't delete any post yet</h1>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -173,7 +173,7 @@
                     }
                 })(marker, i));
 
-                // Automatically center the map fitting all markers on the screen 
+                // Automatically center the map fitting all markers on the screen
                 map.fitBounds(bounds);
             }
             // Override our map zoom level once our fitBounds function runs(Make sure it only runs once)
