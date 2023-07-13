@@ -20,9 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+Route::get('/', [KothaController::class, 'index']);
 
 Auth::routes();
 
@@ -50,8 +48,9 @@ Route::get('kotha/{kotha}/show', [kothaController::class, 'showImages'])->name('
 Route::get('trash', [trashController::class, 'index'])->name('trash');
 Route::get('trash/restore/{id}', [trashController::class, 'restore'])->name('trash.restore');
 Route::get('trash/delete/{id}', [trashController::class, 'delete'])->name('trash.delete');
+Route::get('kotha', [KothaController::class, 'index'])->name('kotha.index');
 Route::resource('user', UserController::class);
-Route::resource('kotha', KothaController::class);
+Route::resource('kotha', KothaController::class)->except(['index', 'filter']);
 Route::resource('post', postController::class);
 
 Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');

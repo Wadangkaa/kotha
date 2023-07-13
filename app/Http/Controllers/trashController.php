@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Session;
 
 class trashController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     public function index(){
         Session::PUT('active', 'trash');
         $myKothas = Kotha::onlyTrashed()->where('user_id', auth()->user()->id)->get();

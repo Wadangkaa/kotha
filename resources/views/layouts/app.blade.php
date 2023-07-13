@@ -33,7 +33,9 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                        {{ Auth::user()->name }}
+                        @auth
+                            {{ Auth::user()->name }}
+                        @endauth
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" style="left: inherit; right: 0px;">
                         <a href="{{ route('profile.show') }}" class="dropdown-item">
@@ -59,26 +61,35 @@
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <!-- Brand Logo -->
-            @if (auth()->user()->is_admin)
-                <a href="/admin/dashboard" class="brand-link">
-                    <img src="{{ asset('images/AdminLTELogo.png') }}" alt="AdminLTE Logo"
-                        class="brand-image img-circle elevation-3" style="opacity: .8">
-                    <span class="brand-text font-weight-light">Kotha</span>
-                </a>
+
+            @auth
+                <!-- Brand Logo -->
+                @if (auth()->user()->is_admin)
+                    <a href="/admin/dashboard" class="brand-link">
+                        <img src="{{ asset('images/AdminLTELogo.png') }}" alt="AdminLTE Logo"
+                            class="brand-image img-circle elevation-3" style="opacity: .8">
+                        <span class="brand-text font-weight-light">Kotha</span>
+                    </a>
+                @else
+                    <a href="/" class="brand-link">
+                        <img src="{{ asset('images/AdminLTELogo.png') }}" alt="AdminLTE Logo"
+                            class="brand-image img-circle elevation-3" style="opacity: .8">
+                        <span class="brand-text font-weight-light">Kotha</span>
+                    </a>
+                @endif
+            @endauth
+
+            @if (auth()->user())
+                @if (auth()->user()->is_admin)
+                    @include('admin.adminNavigation')
+                @else
+                    @include('layouts.navigation')
+                @endif
             @else
-                <a href="/" class="brand-link">
-                    <img src="{{ asset('images/AdminLTELogo.png') }}" alt="AdminLTE Logo"
-                        class="brand-image img-circle elevation-3" style="opacity: .8">
-                    <span class="brand-text font-weight-light">Kotha</span>
-                </a>
+                @include('layouts.guestNavigation')
+
             @endif
 
-            @if (auth()->user()->is_admin)
-                @include('admin.adminNavigation')
-            @else
-                @include('layouts.navigation')
-            @endif
         </aside>
 
         <!-- Content Wrapper. Contains page content -->

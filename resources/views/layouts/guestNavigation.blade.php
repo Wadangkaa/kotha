@@ -3,11 +3,7 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="info">
-            @if (auth())
-            <a href="{{ route('profile.show') }}" class="d-block">{{ Auth::user()->name }}</a>
-            @else
-            Guest
-            @endif
+            <a href="#" class="d-block">Guest User</a>
         </div>
     </div>
 

@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Session;
 class postController extends Controller
 {
     use CheckOwnership;
+
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *

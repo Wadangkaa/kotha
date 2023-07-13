@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Session;
 use Cixware\Esewa\Client;
 use Cixware\Esewa\Config;
 
-require '../vendor/autoload.php';
-
 class esewaController extends Controller
 {
     public function esewaPay()
@@ -40,7 +38,7 @@ class esewaController extends Controller
             Session::remove('new_kotha_id');
             Session::put('success', 'Payment Success');
         }
-        
+
         return redirect()->route('post.index');
     }
 

@@ -5,7 +5,6 @@
         position: sticky;
         padding: 0 1rem;
     }
-
 </style>
 <link rel="stylesheet" href="{{ asset('css/userperferences.css') }}">
 
@@ -21,13 +20,14 @@
                 <option disabled hidden selected>Select District</option>
                 @foreach ($NepalDistrict as $district)
                     <option value="{{ $district }}"
-                    @if (isset($selectedDistrict))
-                    @if ($district == $selectedDistrict)
-                        selected
-                    @endif
-                    @endif>{{ $district }}</option>
+                        @if (isset($selectedDistrict)) @if ($district == $selectedDistrict)
+                        selected @endif
+                        @endif>{{ $district }}</option>
                 @endforeach
             </select>
+            @error('district')
+                <small id="helpId" class="form-text text-danger">{{ $message }}</small>
+            @enderror
         </div>
 
         <div class="row">
@@ -56,11 +56,13 @@
         <div class="row">
             <div class="col">
                 <x-input-label for='min_price' label='min_price' />
-                <x-input type="number" id='hello' name="min_price" placeholder="Min price" min=0 style="font-size: 12px; padding: 0px 2px 0px 10px;"/>
+                <x-input type="number" id='hello' name="min_price" placeholder="Min price" min=0
+                    style="font-size: 12px; padding: 0px 2px 0px 10px;" />
             </div>
             <div class="col">
                 <x-input-label for='min_price' label='min_price' />
-                <x-input type="number" name="max_price" placeholder="Max price" style="font-size: 12px; padding: 0px 2px 0px 10px;"/>
+                <x-input type="number" name="max_price" placeholder="Max price"
+                    style="font-size: 12px; padding: 0px 2px 0px 10px;" />
             </div>
         </div>
 

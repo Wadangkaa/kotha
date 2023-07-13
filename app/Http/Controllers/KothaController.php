@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kotha;
 use App\Http\Controllers\esewaController;
+use App\Http\Requests\KothaFilterRequest;
 use App\Http\Requests\KothaStoreRequest;
 use App\Models\Additional_info;
 use App\Models\UserPreference;
@@ -15,6 +16,12 @@ use App\Traits\CheckOwnership;
 class KothaController extends Controller
 {
     use CheckOwnership;
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'filter']);
+    }
+
     private $NepalDistrict = [
         'Bhojpur', 'Dhankuta', 'Ilam', 'Jhapa', 'Khotang', 'Morang', 'Okhaldhunga', 'Panchthar', 'Sankhuwasabha', 'Solukhumbu', 'Sunsari', 'Taplejung', 'Terhathum', 'Udayapur',
         'Bara', 'Dhanusa', 'Mohattari', 'Parsa', 'Rautahat', 'Saptari', 'Sarlahi', 'Siraha',
@@ -25,26 +32,29 @@ class KothaController extends Controller
         'Achham', 'Baitadi', 'Bajhang', 'Bajura', 'Dadeldhura', 'Darchula', 'Doti', 'Kailali', 'Kanchanpur'
     ];
 
-
     public function index()
     {
         $kothas =  Kotha::where('status', 'approved')->paginate();
-        $recommendated_kothas = null;
-        $hasPerferences = UserPreference::where('user_id', auth()->user()->id)->count();
-
-        if ($hasPerferences) {
-            $user_preferences = UserPreference::where('user_id', auth()->user()->id)->first();
-
-            if ($user_preferences) {
-                $recommendated_kothas = (new RecommendationController)->recommendateRoom($user_preferences);
-            }
-        }
-
-
         sort($this->NepalDistrict);
         $NepalDistrict = $this->NepalDistrict;
         Session::put('active', 'allpost');
-        return view('dashboard', compact('NepalDistrict', 'kothas', 'recommendated_kothas'));
+
+        if (auth()->user()) {
+            $recommendated_kothas = null;
+            $hasPerferences = UserPreference::where('user_id', auth()->user()->id)->count();
+
+            if ($hasPerferences) {
+                $user_preferences = UserPreference::where('user_id', auth()->user()->id)->first();
+
+                if ($user_preferences) {
+                    $recommendated_kothas = (new RecommendationController)->recommendateRoom($user_preferences);
+                }
+            }
+
+            return view('dashboard', compact('NepalDistrict', 'kothas', 'recommendated_kothas'));
+        } else {
+            return view('dashboard', compact('NepalDistrict', 'kothas'));
+        }
     }
 
     public function create()
@@ -180,7 +190,7 @@ class KothaController extends Controller
         return view('showImage', compact('images'));
     }
 
-    public function filter(Request $request)
+    public function filter(KothaFilterRequest $request)
     {
         sort($this->NepalDistrict);
         $district = $request['district'];
