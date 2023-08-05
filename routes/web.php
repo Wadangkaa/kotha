@@ -37,8 +37,8 @@ Route::middleware('auth')->group(function () {
 
 // Route::get('/', [KothaController::class, 'index'])->name('kotha.index');
 
-Route::get('user/preferences',[UserController::class, 'openPreferencesForm'])->name('user.preferences.index');
-Route::post('user/preferences',[UserController::class, 'preferences'])->name('user.preferences.store');
+Route::get('user/preferences', [UserController::class, 'openPreferencesForm'])->name('user.preferences.index');
+Route::post('user/preferences', [UserController::class, 'preferences'])->name('user.preferences.store');
 
 Route::post('kotha/filter', [kothaController::class, 'filter'])->name('kotha.filter');
 Route::post('esewa', [esewaController::class, 'esewaPay'])->name('esewa');
@@ -53,10 +53,12 @@ Route::resource('user', UserController::class);
 Route::resource('kotha', KothaController::class)->except(['index', 'filter']);
 Route::resource('post', postController::class);
 
-Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-Route::get('admin/kotha', [AdminController::class, 'index'])->name('admin.index');
-Route::get('admin /kotha/{kotha}/preview', [AdminController::class, 'show'])->name('admin.kotha.preview');
-Route::get('admin/kotha/{kotha}/approve', [AdminController::class, 'approve'])->name('admin.kotha.approve');
-Route::get('admin/kotha/{kotha}/reject', [AdminController::class, 'reject'])->name('admin.kotha.reject');
+Route::group(['middleware' => ['is_admin', 'auth'], 'prefix' => 'admin'], function () {
+    Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('kotha', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/kotha/{kotha}/preview', [AdminController::class, 'show'])->name('admin.kotha.preview');
+    Route::get('kotha/{kotha}/approve', [AdminController::class, 'approve'])->name('admin.kotha.approve');
+    Route::get('kotha/{kotha}/reject', [AdminController::class, 'reject'])->name('admin.kotha.reject');
+});
 
 

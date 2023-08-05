@@ -41,9 +41,9 @@ class KothaController extends Controller
 
         if (auth()->user()) {
             $recommendated_kothas = null;
-            $hasPerferences = UserPreference::where('user_id', auth()->user()->id)->count();
+            $hasPreferences = UserPreference::where('user_id', auth()->user()->id)->count();
 
-            if ($hasPerferences) {
+            if ($hasPreferences) {
                 $user_preferences = UserPreference::where('user_id', auth()->user()->id)->first();
 
                 if ($user_preferences) {
@@ -128,10 +128,6 @@ class KothaController extends Controller
         ]);
 
         return view('detail', compact('kotha'));
-    }
-
-    public function edit(Kotha $kotha)
-    {
     }
 
     public function update(Request $request, Kotha $kotha)

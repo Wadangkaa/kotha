@@ -25,10 +25,11 @@ class RecommendationController extends Controller
         });
 
         $similarity_score = array_splice($similarity_score, 0, 3);
-        return $recommended_rooms_id = array_column($similarity_score, "kotha");
+        $recommended_rooms = array_column($similarity_score, "kotha");
+        return $recommended_rooms;
     }
 
-    
+
     private function calculate_similarity($user_preferences, $kotha): int
     {
         $similarity = 0;

@@ -143,7 +143,7 @@ class UserController extends Controller
             'Dailekh', 'Dolpa', 'Humla', 'Jajarkot', 'Jumla', 'Kalikot', 'Mugu', 'Rukum', 'Salyan', 'Surkhet',
             'Achham', 'Baitadi', 'Bajhang', 'Bajura', 'Dadeldhura', 'Darchula', 'Doti', 'Kailali', 'Kanchanpur'
         ];
-        return view('auth.userPerferences', compact('NepalDistricts'));
+        return view('auth.userPreferences', compact('NepalDistricts'));
     }
 
     public function preferences(Request $request)
