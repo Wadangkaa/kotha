@@ -36,7 +36,7 @@ class esewaController extends Controller
 
         if ($payment_id) {
             Session::remove('new_kotha_id');
-            Session::put('success', 'Payment Success');
+            Session::put('success', 'Payment Success waiting for admin approval');
         }
 
         return redirect()->route('post.index');

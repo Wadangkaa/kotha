@@ -32,10 +32,14 @@
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
+                    @if(Auth::check() == false)
+                        <a href="login" >Login</a>
+                    @endif
                     <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
                         @auth
                             {{ Auth::user()->name }}
                         @endauth
+
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" style="left: inherit; right: 0px;">
                         <a href="{{ route('profile.show') }}" class="dropdown-item">

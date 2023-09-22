@@ -30,7 +30,7 @@ class postController extends Controller
             'additionalInfo',
             'images',
             'payment'
-        ])->where('user_id', auth()->user()->id)->get();
+        ])->where('user_id', auth()->user()->id)->where('status', '!=', 'pending')->latest()->get();
 
         return view('mypost', compact('myKothas'));
     }
